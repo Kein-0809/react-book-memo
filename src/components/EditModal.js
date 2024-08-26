@@ -9,6 +9,7 @@ import { InputBookTitle, InputBookDesc, InputBookComment, InputBookRating } from
 const EditModal = ({ book, setBook, toggleEditModal }) => {
   const dispatch = useDispatchBooks();
 
+  // "{ ...book }" (スプレッド構文) で、bookのオブジェクトのシャローコピーする。
   const [editedBook, setEditedBook] = useState({ ...book });
 
   const clickCancel = () => toggleEditModal();

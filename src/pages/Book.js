@@ -23,6 +23,7 @@ const Book = () => {
   const [book, setBook] = useState({});
   const [error, setError] = useState('');
 
+  // まず初めにページが読み込まれたら、APIから本の情報を取得する
   useEffect(() => {
     bookApi.get(id).then((_book) => {
       setBook(_book);
@@ -32,12 +33,16 @@ const Book = () => {
     });
   }, []);
 
+  // "編集"ボタンによって編集モーダルの状態を管理する
+  // (prev) => !prevは、現在の状態の反対の値を設定します（trueならfalse、falseならtrue）
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const toggleEditModal = () => setIsEditModalOpen((prev) => !prev);
 
+  // "削除"ボタンによって削除モーダルの状態を管理する
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
 
+  // "一覧"ボタンによって"/books"に戻るためのナビゲーションを管理する
   const navigate = useNavigate();
   const goToBooksPage = () => navigate("/books");
 
@@ -79,7 +84,8 @@ const Book = () => {
           </Button>
         </div>
       </div>
-      
+
+      {/* 編集モーダルが開いている場合、編集モーダルを表示する */}
       {isEditModalOpen && (
         <ModalPortal>
           <EditModal
@@ -90,6 +96,7 @@ const Book = () => {
         </ModalPortal>
       )}
 
+      {/* 削除モーダルが開いている場合、削除モーダルを表示する */}
       {isDeleteModalOpen && (
         <ModalPortal>
           <DeleteModal book={book} toggleDeleteModal={toggleDeleteModal} />
